@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private ListView lvSinhVien;
     private ArrayList<SinhVien> SinhVienList;
     private ArrayAdapter<SinhVien> adapter;
-    private Button btnAdd;
+    private Button btnAdd, btn_delete;
     private Button btnEdit;
     private EditText etId;
     private EditText etName;
@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         etClass = findViewById(R.id.et_class);
         btnAdd = findViewById(R.id.btn_add);
         btnEdit = findViewById(R.id.btn_edit);
+        btn_delete = findViewById(R.id.btn_delete);
 
         lvSinhVien.setAdapter(adapter);
 
@@ -68,6 +69,32 @@ public class MainActivity extends AppCompatActivity {
                     SinhVienList.add(new SinhVien(id,name,phone,lop));
                     adapter.notifyDataSetChanged();
                     showDataBase(dbAdapter);
+
+                    etId.setText(null);
+                    etName.setText(null);
+                    etPhone.setText(null);
+                    etClass.setText(null);
+                }
+            }
+
+        });
+
+        btn_delete.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
+                if (etId.getText() != null && etName.getText() != null && etPhone.getText() != null && etClass.getText()!= null)
+                {
+                    int id = Integer.parseInt(etId.getText().toString());
+                    String name = etName.getText().toString();
+                    String phone = etPhone.getText().toString();
+                    String lop = etClass.getText().toString();
+
+                    SinhVien newsv = new SinhVien(id,name,phone,lop);
+                    //SinhVien newSV = new SinhVien(id,name,phone,lop);
+                    dbAdapter.deleteSV(newsv);
+//                    SinhVienList.add(new SinhVien(id,name,phone,lop));
+                    SinhVienList.remove(newsv);
+                    adapter.notifyDataSetChanged();
+//                    showDataBase(dbAdapter);
 
                     etId.setText(null);
                     etName.setText(null);
@@ -136,17 +163,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        lvSinhVien.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                int mssv = SinhVienList.get(i).getMssv();
-                dbAdapter.deleteSV(mssv);
-                SinhVienList.remove(i);
-                adapter.notifyDataSetChanged();
-                showDataBase(dbAdapter);
-                return true;
-            }
-        });
+//        lvSinhVien.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//            @Override
+//            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                int mssv = SinhVienList.get(i).getMssv();
+//                dbAdapter.deleteSV(mssv);
+//                SinhVienList.remove(i);
+//                adapter.notifyDataSetChanged();
+//                showDataBase(dbAdapter);
+//                return true;
+//            }
+//        });
 
 
 

@@ -85,8 +85,9 @@ public class DatabaseAdapter {
         return kq;
     }
 
-    public int deleteSV(int mssv){
-        return sqLiteDatabase.delete(TABLE_SINHVIEN, KEY_MSSV + "=" + mssv, null);
+    public int deleteSV(SinhVien sv){
+        int id = sv.getMssv();
+        return sqLiteDatabase.delete(TABLE_SINHVIEN, "mssv =" + id, null);
     }
 
     public boolean deleteAllUsers() {
